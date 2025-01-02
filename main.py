@@ -488,9 +488,7 @@ def FirstFrame():
             if job != 0:
                 if job[0] == jobname:
                     count += 1
-                    label = Label(first_frame, text=f"{job[1]}\t{job[2]}\t{job[3]}\t{job[4]}")
-                    label.config(bg="#89cff0", font=("Calibri", 18, "bold"))
-                    label.place(x=10, y=400)
+                    messagebox.showinfo(title=f"{jobname}",message=f"Job software: {job[1]}\nCompany: {job[2]}\nWage: {job[3]}\nWork hours: {job[4]}")
 
     def sort():
         with open("jobs_list.json", "r") as file:
