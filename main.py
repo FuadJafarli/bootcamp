@@ -65,18 +65,18 @@ def LoginFrame():
         login = enteruser.get()
         password = enterpass.get()
         print(f"login: {login} ---> password: {password}")
-        with open("sitesiyahi.json", "r") as file:
+        with open("reg_list.json", "r") as file:
             reg = load(file)
+        if login == "admin" and password == "admin":
+            FirstFrameAdmin()
+            return
+
         for i in reg:
             if i != []:
-                if login == "admin" and password == "admin":
-                    FirstFrameAdmin()
-                    return
-                else:
-                    if i[0] == login:
-                        if i[1] == password:
-                            FirstFrame()
-                            return
+                if i[0] == login:
+                    if i[1] == password:
+                        FirstFrame()
+                        return
 
         messagebox.showerror(title="Error", message=f"Error in either username or password")
 
@@ -164,7 +164,7 @@ def SigninFrame():
         elif enterpass.get() != enterpass2.get():
             messagebox.showerror(title="error", message="Error in password repeat")
         else:
-            with open("sitesiyahi.json", "r") as file:
+            with open("reg_list.json", "r") as file:
                 reg_file = load(file)
             new_list = []
             login = enteruser.get()
@@ -182,7 +182,7 @@ def SigninFrame():
 
             reg_file.append(new_list)
 
-            with open("sitesiyahi.json", "w") as file:
+            with open("reg_list.json", "w") as file:
                 dump(reg_file, file)
 
             enteruser.delete(0, END)
@@ -331,11 +331,12 @@ def FirstFrameAdmin():
             if job != 0:
                 if job[0] == jobname:
                     count += 1
-                    messagebox.showinfo(title=f"{jobname}",
-                                        message=f"Job software: {job[1]}\nCompany: {job[2]}\nWage: {job[3]}\nWork hours: {job[4]}")
+                    messagebox.showinfo(title=f"{jobname}",message=f"Job software: {job[1]}\nCompany: {job[2]}\nWage: {job[3]}\nWork hours: {job[4]}")
+
 
         if count == 0:
             messagebox.showwarning(message=f"This job could not be found")
+        del_entry.delete(0, END)
 
     def sort():
         with open("jobs_list.json", "r") as file:
@@ -489,6 +490,9 @@ def FirstFrame():
                 if job[0] == jobname:
                     count += 1
                     messagebox.showinfo(title=f"{jobname}",message=f"Job software: {job[1]}\nCompany: {job[2]}\nWage: {job[3]}\nWork hours: {job[4]}")
+        if count == 0:
+            messagebox.showwarning(message=f"This job could not be found")
+        find_entry.delete(0, END)
 
     def sort():
         with open("jobs_list.json", "r") as file:
